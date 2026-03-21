@@ -1,6 +1,6 @@
 ---
 description: Minimax model configuration guide for Cline
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Minimax Model Configuration for Cline
