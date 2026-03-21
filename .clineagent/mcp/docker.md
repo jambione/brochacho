@@ -1,31 +1,36 @@
-# Docker MCP
+# Docker MCP Server
 
-Gives Cline visibility into running Docker containers — logs, status, exec commands.
+Manage Docker containers, images, networks, and volumes.
 
 ## Install
 
 ```bash
-npm install -g @modelcontextprotocol/server-docker
+npm install -g @hypnosis/docker-mcp-server
 ```
 
-## Config (`cline_mcp_settings.json`)
+## Configuration
+
+No additional configuration required - uses local Docker socket.
+
+Add to Cline MCP settings:
 
 ```json
 "docker": {
   "command": "npx",
-  "args": ["-y", "@modelcontextprotocol/server-docker"]
+  "args": ["-y", "@hypnosis/docker-mcp-server"]
 }
 ```
 
-Requires Docker to be running on your machine.
+## Usage
 
-## What it unlocks
+- List and manage containers
+- Inspect container logs
+- Start/stop/restart containers
+- Pull and manage images
+- Network and volume management
+- Docker Compose support
 
-- `devops-automator` can inspect container health without leaving Cline
-- `sre-site-reliability-engineer` can pull logs during an incident
-- `infrastructure-maintainer` can check which services are up/down
-- `systematic-debugging` skill can read container logs as part of root cause analysis
+## Requirements
 
-## Note
-
-This MCP provides read access and exec by default. Restrict exec permissions if you're concerned about Cline running arbitrary commands inside containers.
+- Docker daemon running locally
+- Docker socket accessible (`/var/run/docker.sock`)

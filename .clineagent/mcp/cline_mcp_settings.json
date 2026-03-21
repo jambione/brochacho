@@ -22,18 +22,23 @@
       "args": ["-y", "@modelcontextprotocol/server-fetch"]
     },
 
-    "memory": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"]
-    },
-
     "filesystem": {
       "command": "npx",
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/Users/YOUR_USERNAME/Projects"
+        "/Users/jonathanbrasfield/repo"
       ]
+    },
+
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+
+    "docker": {
+      "command": "npx",
+      "args": ["-y", "@hypnosis/docker-mcp-server"]
     },
 
     "postgres": {
@@ -45,14 +50,26 @@
       ]
     },
 
-    "puppeteer": {
+    "sqlite": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+      "args": [
+        "-y",
+        "@mokei/mcp-sqlite",
+        "${SQLITE_DB_PATH}"
+      ]
     },
 
-    "docker": {
+    "redis": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-docker"]
+      "args": ["-y", "@modelcontextprotocol/server-redis"],
+      "env": {
+        "REDIS_URL": "${REDIS_URL}"
+      }
+    },
+
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
     }
 
   }

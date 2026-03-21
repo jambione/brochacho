@@ -40,6 +40,7 @@ Read this file before every task to pick the right agent. Match the task to a de
 | `agents/engineering/embedded-firmware-engineer.md` | Specialist in bare-metal and RTOS firmware - ESP32/ESP-IDF, PlatformIO, Arduino, ARM Cortex-M, STM32 HAL/LL, N |
 | `agents/engineering/feishu-integration-developer.md` | Full-stack integration expert specializing in the Feishu (Lark) Open Platform — proficient in Feishu bots, min |
 | `agents/engineering/frontend-developer.md` | Expert frontend developer specializing in modern web technologies, React/Vue/Angular frameworks, UI implementa |
+| `agents/engineering/github-actions-engineer.md` | Expert GitHub Actions engineer specializing in CI/CD workflow design, workflow YAML development, and automation |
 | `agents/engineering/git-workflow-master.md` | Expert in Git workflows, branching strategies, and version control best practices including conventional commi |
 | `agents/engineering/incident-response-commander.md` | Expert incident commander specializing in production incident management, structured response coordination, po |
 | `agents/engineering/mobile-app-builder.md` | Specialized mobile application developer with expertise in native iOS/Android development and cross-platform f |
