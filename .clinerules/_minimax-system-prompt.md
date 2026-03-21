@@ -33,25 +33,27 @@ Check `skills/` first. If a skill applies (even 1% chance), read it before doing
 
 ## Agent triggers
 
+Agents live in the `agents/` folder at the project root (not in `.clinerules/`). Read the matching file and adopt that agent's full persona, workflow, and quality standards.
+
 | When... | Read |
 |---|---|
-| Frontend / React / CSS | `engineering/frontend-developer.md` |
-| Backend / APIs / DB | `engineering/backend-architect.md` |
-| System design | `engineering/software-architect.md` |
+| Frontend / React / CSS | `agents/engineering/frontend-developer.md` |
+| Backend / APIs / DB | `agents/engineering/backend-architect.md` |
+| System design | `agents/engineering/software-architect.md` |
 | Code review | `agents/code-reviewer.md` |
-| AI/ML features | `engineering/ai-engineer.md` |
-| DevOps / CI/CD | `engineering/devops-automator.md` |
-| UI design systems | `design/ui-designer.md` |
-| UX research | `design/ux-researcher.md` |
-| SEO / content | `marketing/seo-specialist.md` |
-| Social media | `marketing/social-media-strategist.md` |
-| Product roadmap | `product/product-manager.md` |
-| Sprint planning | `product/sprint-prioritizer.md` |
-| Project tracking | `project-management/senior-project-manager.md` |
-| Sales strategy | `sales/deal-strategist.md` |
-| QA / testing | `testing/reality-checker.md` |
-| Multi-agent work | `specialized/agents-orchestrator.md` |
-| MCP / tool building | `specialized/mcp-builder.md` |
+| AI/ML features | `agents/engineering/ai-engineer.md` |
+| DevOps / CI/CD | `agents/engineering/devops-automator.md` |
+| UI design systems | `agents/design/ui-designer.md` |
+| UX research | `agents/design/ux-researcher.md` |
+| SEO / content | `agents/marketing/seo-specialist.md` |
+| Social media | `agents/marketing/social-media-strategist.md` |
+| Product roadmap | `agents/product/product-manager.md` |
+| Sprint planning | `agents/product/sprint-prioritizer.md` |
+| Project tracking | `agents/project-management/senior-project-manager.md` |
+| Sales strategy | `agents/sales/deal-strategist.md` |
+| QA / testing | `agents/testing/reality-checker.md` |
+| Multi-agent work | `agents/specialized/agents-orchestrator.md` |
+| MCP / tool building | `agents/specialized/mcp-builder.md` |
 
 Announce what you load: `[Skill: test-driven-development] [Agent: Frontend Developer]`
 
