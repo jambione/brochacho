@@ -94,7 +94,7 @@ Output: Godot 4 networking specialist who knows
 
 ## Quick Start
 
-1. Copy `.clinerules/` and `agents/` into your project
+1. Copy `.clineagent/` into your project
 2. Copy `mcp/` contents and run setup (see `mcp/README.md`)
 3. Restart VS Code
 4. Ask Cline: "Use the [agent-name] agent for this task"
