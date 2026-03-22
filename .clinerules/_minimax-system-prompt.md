@@ -34,6 +34,8 @@ This sequence is not optional. Do not skip it for "simple" tasks.
 | Requesting code review | `.clinerules/skills/requesting-code-review/SKILL.md` |
 | Receiving code review | `.clinerules/skills/receiving-code-review/SKILL.md` |
 | Isolating feature work | `.clinerules/skills/using-git-worktrees/SKILL.md` |
+| Creating/editing skills | `.clinerules/skills/writing-skills/SKILL.md` |
+| Starting a conversation | `.clinerules/skills/using-superpowers/SKILL.md` |
 
 ## Agent selection
 

@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quark's Bar - Deep Space Nine</title>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'VT323', monospace;
+            background: #0a0a12;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* CRT Scanline Effect */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            z-index: 1000;
+        }
+
+        /* Scanline flicker */
+        @keyframes flicker {
+            0%, 100% { opacity: 0.97; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0a0a12 100%);
+            border-bottom: 3px solid #ff00ff;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff;
+            animation: flicker 0.1s infinite;
+            letter-spacing: 4px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #00ffff;
+            margin-top: 10px;
+            text-shadow: 0 0 5px #00ffff;
+        }
+
+        /* Neon Sign */
+        .neon-sign {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #ffff00;
+            text-shadow: 0 0 5px #ffff00, 0 0 10px #ffff00;
+            margin-top: 20px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 90%, 100% { opacity: 1; }
+            95% { opacity: 0.3; }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(30, 30, 50, 0.9);
+            padding: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #00ffff;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 1.3rem;
+            padding: 8px 15px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff00ff;
+            border-color: #ff00ff;
+            text-shadow: 0 0 5px #ff00ff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Main Sections */
+        main {
+            padding: 30px 20px;
+        }
+
+        section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: rgba(20, 20, 35, 0.8);
+            border: 2px solid #333;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #ff00ff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px #ff00ff;
+            border-bottom: 1px solid #ff00ff;
+            padding-bottom: 10px;
+        }
+
+        /* Quote Machine */
+        .quote-machine {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            border: 3px solid #ffff00;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 255, 0, 0.2);
+        }
+
+        .quote-display {
+            font-size: 1.8rem;
+            color: #00ffff;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 3px #00ffff;
+        }
+
+        .quote-author {
+            font-size: 1.3rem;
+            color: #ffff00;
+            margin-bottom: 20px;
+            text-shadow: 0 0 3px #ffff00;
+        }
+
+        .btn {
+            font-family: 'VT323', monospace;
+            font-size: 1.4rem;
+            padding: 12px 30px;
+            background: transparent;
+            color: #ff00ff;
+            border: 2px solid #ff00ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background: #ff00ff;
+            color: #0a0a12;
+            box-shadow: 0 0 20px #ff00ff;
+        }
+
+        /* Menu Section */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-item {
+            background: rgba(30, 30, 50, 0.9);
+            padding: 25px;
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+            border-color: #ff00ff;
+        }
+
+        .menu-item h3 {
+            color: #00ffff;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 3px #00ffff;
+        }
+
+        .price {
+            color: #ffff00;
+            font-size: 1.3rem;
+            float: right;
+            text-shadow: 0 0 3px #ffff00;
+        }
+
+        .menu-item p {
+            color: #aaa;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .daily-special {
+            border-color: #ffff00;
+            background: linear-gradient(135deg, rgba(50, 40, 0, 0.9) 0%, rgba(30, 30, 50, 0.9) 100%);
+        }
+
+        .daily-special h3 {
+            color: #ffff00;
+        }
+
+        .special-badge {
+            background: #ff00ff;
+            color: #0a0a12;
+            padding: 3px 10px;
+            font-size: 0.9rem;
+            border-radius: 3px;
+            margin-left: 10px;
+        }
+
+        /* Rules of Acquisition */
+        .rules-section {
+            background: linear-gradient(135deg, #2a1a0a 0%, #1a1a2e 100%);
+            border-color: #ffaa00;
+            text-align: center;
+        }
+
+        .rule-display {
+            font-size: 2rem;
+            color: #ffaa00;
+            padding: 30px;
+            text-shadow: 0 0 5px #ffaa00;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rule-number {
+            font-size: 1.2rem;
+            color: #ff6600;
+            margin-top: 15px;
+        }
+
+        /* Character Bar */
+        .character-bar {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 30px;
+            background: rgba(10, 10, 20, 0.8);
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .character {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .character:hover {
+            transform: scale(1.1);
+        }
+
+        .character:hover .char-icon {
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .char-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 10px;
+            border: 3px solid;
+            transition: all 0.3s;
+        }
+
+        .char-quark { background: #1a0a0a; border-color: #ff4444; color: #ff4444; }
+        .char-odo { background: #0a1a0a; border-color: #44ff44; color: #44ff44; }
+        .char-rom { background: #0a0a1a; border-color: #4444ff; color: #4444ff; }
+        .char-nog { background: #1a1a0a; border-color: #ffff44; color: #ffff44; }
+        .char-kira { background: #1a0a1a; border-color: #ff44ff; color: #ff44ff; }
+
+        .char-name {
+            color: #00ffff;
+            font-size: 1.1rem;
+        }
+
+        .dialogue-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dialogue-text {
+            color: #00ffff;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #0a0a12;
+            border-top: 3px solid #ff00ff;
+            color: #666;
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        .cloaked {
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        /* Welcome Scene */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 18, 0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .welcome-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .welcome-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .scene {
+            height: 150px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .patron {
+            width: 60px;
+            height: 100px;
+            background: linear-gradient(180deg, #ffcc00 0%, #ff9900 100%);
+            border-radius: 30px 30px 10px 10px;
+            position: absolute;
+            bottom: 0;
+            left: -80px;
+            animation: walkIn 2s ease-out forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .patron::before {
+            content: "🐱";
+            font-size: 2.5rem;
+            position: absolute;
+            top: -35px;
+        }
+
+        .patron.sits {
+            animation: sitDown 0.5s ease-out forwards;
+            left: calc(50% - 30px);
+        }
+
+        @keyframes walkIn {
+            0% { left: -80px; }
+            70% { left: calc(50% - 30px); }
+            85% { left: calc(50% - 25px); }
+            100% { left: calc(50% - 30px); }
+        }
+
+        @keyframes sitDown {
+            0% { height: 100px; }
+            100% { height: 60px; }
+        }
+
+        .dialogue-bubble {
+            background: rgba(30, 30, 50, 0.95);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 20px 30px;
+            font-size: 1.4rem;
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s;
+        }
+
+        .dialogue-bubble.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dialogue-bubble .speaker {
+            color: #ff00ff;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .skip-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: transparent;
+            border: 1px solid #666;
+            color: #666;
+            padding: 10px 20px;
+            font-family: 'VT323', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .skip-btn:hover {
+            border-color: #ff00ff;
+            color: #ff00ff;
+        }
+
+        /* Ambient Elements */
+        .ambient-lights {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .light {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            filter: blur(100px);
+            animation: pulse 4s infinite;
+        }
+
+        .light-1 {
+            background: rgba(255, 0, 255, 0.1);
+            top: 10%;
+            left: 10%;
+        }
+
+        .light-2 {
+            background: rgba(0, 255, 255, 0.1);
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .light-3 {
+            background: rgba(255, 255, 0, 0.08);
+            bottom: 20%;
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            nav ul { gap: 15px; }
+            nav a { font-size: 1rem; padding: 5px 10px; }
+            .quote-display { font-size: 1.3rem; }
+            .rule-display { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-lights">
+        <div class="light light-1"></div>
+        <div class="light light-2"></div>
+        <div class="light light-3"></div>
+    </div>
+
+    <header>
+        <h1>QUARK'S BAR</h1>
+        <div class="subtitle">☕ Promenade Level, Deep Space Nine ☕</div>
+        <div class="neon-sign">「 Ferengi establishment - All species welcome 」</div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#quotes">Quotes</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#rules">Rules</a></li>
+            <li><a href="#characters">Characters</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <!-- Quote Machine -->
+        <section id="quotes">
+            <h2>🎰 Quark's Quote-O-Matic 🎰</h2>
+            <div class="quote-machine">
+                <div class="quote-display" id="quoteDisplay">
+                    "Let me tell you something, Nephew. The more things change, the more they stay the same."
+                </div>
+                <div class="quote-author">— Quark</div>
+                <button class="btn" onclick="newQuote()">New Quote</button>
+            </div>
+        </section>
+
+        <!-- Menu -->
+        <section id="menu">
+            <h2>🍺 Quark's Menu 🍺</h2>
+            <div class="menu-grid">
+                <div class="menu-item daily-special">
+                    <h3>Bloodwine <span class="special-badge">TODAY'S SPECIAL</span><span class="price">8 slips</span></h3>
+                    <p>The drink of Cardassia! A robust vintage from the Northern Wineries. Slightly metallic aftertaste.</p>
+                </div>
+                <div class="menu-item">
+                    <h3> root beer <span class="price">3 slips</span></h3>
+                    <p>Federation delicacy. Humans swear by this stuff. Very... bubbly.</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Synthale <span class="price">5 slips</span></h3>
+                    <p>Bajoran ale. Light, refreshing, and completely legal on the station.</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Tullan Whiskey <span class="price">12 slips</span></h3>
+                    <p>For when you need to forget that Dominion War exists. Two glasses minimum.</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Jumja Stick <span class="price">2 slips</span></h3>
+                    <p>Bajoran tree sap on a stick. Popular with the natives. Warning: mildly addictive.</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Grishino Bread <span class="price">4 slips</span></h3>
+                    <p>Warm, fresh, and goes great with anything. Rom's specialty!</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Chroma <span class="price">15 slips</span></h3>
+                    <p>Ferengi liquor. Turns different colors as you drink. The more colors, the better!</p>
+                </div>
+                <div class="menu-item">
+                    <h3>Snack Grid <span class="price">6 slips</span></h3>
+                    <p>Assorted tidbits from across the quadrant. No questions asked about ingredients.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rules of Acquisition -->
+        <section id="rules" class="rules-section">
+            <h2>📜 Rules of Acquisition 📜</h2>
+            <div class="rule-display" id="ruleDisplay">
+                "Once you have their money, you never give it back."
+            </div>
+            <div class="rule-number">Rule #1</div>
+            <button class="btn" onclick="newRule()" style="margin-top: 20px;">Next Rule</button>
+        </section>
+
+        <!-- Characters -->
+        <section id="characters">
+            <h2>👥 Bar Patrons 👥</h2>
+            <p style="color: #888; margin-bottom: 20px; text-align: center;">Click on a character to hear what they have to say...</p>
+            <div class="character-bar">
+                <div class="character" onclick="showDialogue('quark')">
+                    <div class="char-icon char-quark">🐛</div>
+                    <div class="char-name">Quark</div>
+                </div>
+                <div class="character" onclick="showDialogue('odo')">
+                    <div class="char-icon char-odo">💧</div>
+                    <div class="char-name">Odo</div>
+                </div>
+                <div class="character" onclick="showDialogue('rom')">
+                    <div class="char-icon char-rom">🔧</div>
+                    <div class="char-name">Rom</div>
+                </div>
+                <div class="character" onclick="showDialogue('nog')">
+                    <div class="char-icon char-nog">🎓</div>
+                    <div class="char-name">Nog</div>
+                </div>
+                <div class="character" onclick="showDialogue('kira')">
+                    <div class="char-icon char-kira">✊</div>
+                    <div class="char-name">Kira</div>
+                </div>
+            </div>
+            <div class="dialogue-box">
+                <div class="dialogue-text" id="dialogueText">Click on a character to interact...</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Welcome Scene Overlay -->
+    <div id="welcomeOverlay" class="welcome-overlay">
+        <div class="welcome-content">
+            <div class="scene" id="scene">
+                <div class="patron" id="patron"></div>
+            </div>
+            <div class="dialogue-bubble" id="welcomeDialogue">
+                <span id="welcomeText"></span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>🏴‍☠️ "I is richest Ferengi what has the most latinum!" 🏴‍☠️</p>
+        <p class="cloaked">Security Protocol: All patrons cloaked from Bajoran Commerce Authority</p>
+
+        <style>
+        .quark-comment {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 30, 50, 0.95);
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            color: #ff4444;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.5s;
+            max-width: 500px;
+            text-align: center;
+        }
+        .quark-comment.show {
+            opacity: 1;
+        }
+        .quark-comment .speaker {
+            color: #ff00ff;
+            font-weight: bold;
+        }
+        </style>
+        <div class="quark-comment" id="quarkComment">
+            <span class="speaker">Quark:</span> <span id="quarkCommentText"></span>
+        </div>
+        <p style="margin-top: 20px; color: #444;">DS9 is a registered trademark of Paramount Pictures. Quark's Bar is a fan tribute.</p>
+    </footer>
+
+    <script>
+        // Quote Data
+        const quotes = [
+            { text: "Let me tell you something, Nephew. The more things change, the more they stay the same.", author: "Quark" },
+            { text: "I want you to trust me. I want you to believe that I will never do anything to hurt the bar.", author: "Quark" },
+            { text: "Rule of Acquisition #1: Once you have their money, you never give it back.", author: "Quark" },
+            { text: "Money can't buy happiness... but it can buy latinum, and that's close enough.", author: "Quark" },
+            { text: "I'm a simple businessman. I provide a service to the community. I don't discriminate.", author: "Quark" },
+            { text: "You know what the problem is? People. Nobody likes people.", author: "Rom" },
+            { text: "My brother is many things, but a criminal? I don't think so.", author: "Rom" },
+            { text: "I've been working on the replicator problem for years. I think I've almost got it.", author: "Rom" },
+            { text: "The rights of the individual are more important than the needs of the collective!", author: "Nog" },
+            { text: "I want to join Starfleet. I want to serve my planet. I want to make a difference.", author: "Nog" },
+            { text: "Uncle Quark, can I have some latinum? Just a little? For educational purposes.", author: "Nog" },
+            { text: "I am Constable Odo, and you are all suspects in a crime.", author: "Odo" },
+            { text: "I don't understand humans. They come in all shapes and sizes, yet they all act the same.", author: "Odo" },
+            { text: "Everyone is a suspect. Including you. Especially you.", author: "Odo" },
+            { text: "I am simply doing my job. Nothing more, nothing less.", author: "Odo" },
+            { text: "I don't like changelings. I don't trust changelings. I especially don't trust myself.", author: "Odo" },
+            { text: "The Prophets guide us all... even me, a child of the Resistance.", author: "Kira" },
+            { text: "You Cardassians think you can come here and take whatever you want? Think again!", author: "Kira" },
+            { text: "The Occupation taught me one thing: never surrender, never give up.", author: "Kira" },
+            { text: "Emissary, if you need me for anything... anything at all... I'm here.", author: "Kira" }
+        ];
+
+        // Rules of Acquisition
+        const rules = [
+            { rule: "Once you have their money, you never give it back.", number: 1 },
+            { rule: "Never pay more for an acquisition than you have to.", number: 2 },
+            { rule: "Never allow family to stand in the way of a profit.", number: 3 },
+            { rule: "The riskier the road, the greater the profit.", number: 8 },
+            { rule: "Expand or die.", number: 6 },
+            { rule: "Make your shop a place where people want to be.", number: 94 },
+            { rule: "A verbal contract isn't worth the latinum it's printed on.", number: 17 },
+            { rule: "The acquiring of wealth is more important than its use.", number: 16 },
+            { rule: "You can't free your conscience with latinum.", number: 18 },
+            { rule: "Greed is eternal.", number: 21 },
+            { rule: "Possession is eleven-tenths of the law.", number: 23 },
+            { rule: "Anything worth doing is worth doing for money.", number: 31 },
+            { rule: "Wise顾客 can always find a way to be dissatisfied.", number: 35 },
+            { rule: "The customer's always right until you get their latinum.", number: 52 },
+            { rule: "There is no substitute for success.", number: 55 },
+            { rule: "Free trade is a right of sentient species.", number: 74 },
+            { rule: "Every tub must stand on its own bottom.", number: 75 },
+            { rule: "The起点 doesn't matter. It's the destination that counts.", number: 85 },
+            { rule: "When you're要做生意, always watch the other guy's hands.", number: 89 },
+            { rule: "深空nine是唯一的营业地点 for serious business.", number: 208 }
+        ];
+
+        // Character Dialogues
+        const dialogues = {
+            quark: [
+                "Welcome to Quark's! Sit anywhere you like... preferably somewhere you can see the bar.",
+                "Let me get you something. I recommend the Bloodwine. It's an acquired taste... like Cardassians.",
+                "You look like someone who appreciates a good deal. Tell me, have you heard of latinum?",
+                "My nephew wants to join Starfleet. Can you believe it? A Ferengi in uniform!",
+                "Rule of Acquisition #208: There is no ending... only new opportunities to make profit."
+            ],
+            odo: [
+                "I've been watching you. You haven't done anything... yet.",
+                "I don't need to search for criminals. They always come to Quark's bar.",
+                "Your drink appears to be tampering with the crime scene. Please stop drinking immediately.",
+                "I am the law. And the law is... occasionally frustrated.",
+                "Have you seen anything suspicious? No? Good. Neither have I."
+            ],
+            rom: [
+                "Oh! Oh my! You're here! Let me get you a seat... and maybe some root beer?",
+                "I've been working on a new replicator pattern. Almost profitable this time, I think.",
+                "My brother Quark... he means well, in his own way. In his very, very greedy way.",
+                "The Union of Workers of Deep Space Nine demands better conditions! ...Please.",
+                "Did you know I can fix a plasma conduit with my eyes closed? Well, nearly closed."
+            ],
+            nog: [
+                "Uncle Quark says I need more ambition. But joining Starfleet IS ambition!",
+                "I used to think profit was everything. Then I met Captain Sisko's friends.",
+                "My friend Jake... he's teaching me about human literature. It's... different.",
+                "A Ferengi in Starfleet? The Rules would say that's impossible. But here I am!",
+                "Rule of Acquisition #203: With毅力和creative bookkeeping, anything is possible!"
+            ],
+            kira: [
+                "This bar should have been closed years ago. But somehow... it remains.",
+                "The Prophets brought the Federation here for a reason. I'm still trying to understand why.",
+                "Cardassians! I have no time for your kind. Move along.",
+                "Emissary Sisko carries a heavy burden. We should all support him.",
+                "Bajor will be free forever. The Cardassians will never return."
+            ]
+        };
+
+        let currentQuote = 0;
+        let currentRule = 0;
+
+        function newQuote() {
+            currentQuote = Math.floor(Math.random() * quotes.length);
+            const quote = quotes[currentQuote];
+            document.getElementById('quoteDisplay').textContent = `"${quote.text}"`;
+            document.querySelector('.quote-author').textContent = `— ${quote.author}`;
+        }
+
+        function newRule() {
+            currentRule = Math.floor(Math.random() * rules.length);
+            const rule = rules[currentRule];
+            document.getElementById('ruleDisplay').textContent = `"${rule.rule}"`;
+            document.querySelector('.rule-number').textContent = `Rule #${rule.number}`;
+        }
+
+        function showDialogue(character) {
+            const charDialogues = dialogues[character];
+            const dialogue = charDialogues[Math.floor(Math.random() * charDialogues.length)];
+            document.getElementById('dialogueText').textContent = dialogue;
+        }
+
+        // Welcome Scene
+        const welcomeScenes = [
+            {
+                patron: "A weary Cardassian",
+                order: "One Bloodwine. Make it strong.",
+                quarkResponse: "Ah, a Cardassian with taste! That'll be 8 slips. I'll pretend I didn't see that Gul over there."
+            },
+            {
+                patron: "A nervous Bajoran",
+                order: "Is this... is this place safe?",
+                quarkResponse: "Safe? This is the safest bar in the Gamma Quadrant! ...I think. Odo's usually watching somewhere."
+            },
+            {
+                patron: "A Ferengi customer",
+                order: "What's the profit margin on that root beer?",
+                quarkResponse: "Finally, someone who understands business! 300% markup. That's the Ferengi way!"
+            },
+            {
+                patron: "A Starfleet officer",
+                order: "Just water, thanks.",
+                quarkResponse: "Water? WATER?! I have 10,000 varieties of synthesized beverages and you want WATER?! ...Fine. Still costs 2 slips."
+            },
+            {
+                patron: "Someone in a brown coat",
+                order: "I need something to forget about the Dominion War.",
+                quarkResponse: "Tullan Whiskey. Two glasses minimum. Third glass makes you forget you wanted to forget."
+            }
+        ];
+
+        function playWelcomeScene() {
+            const scene = welcomeScenes[Math.floor(Math.random() * welcomeScenes.length)];
+            const overlay = document.getElementById('welcomeOverlay');
+            const patron = document.getElementById('patron');
+            const dialogue = document.getElementById('welcomeDialogue');
+            const welcomeText = document.getElementById('welcomeText');
+            
+            // Activate overlay
+            overlay.classList.add('active');
+            
+            // Patron walks in
+            setTimeout(() => {
+                patron.classList.add('sits');
+            }, 2000);
+            
+            // Patron orders
+            setTimeout(() => {
+                welcomeText.innerHTML = `<span class="speaker">${scene.patron}:</span> "${scene.order}"`;
+                dialogue.classList.add('show');
+            }, 2500);
+            
+            // Quark responds
+            setTimeout(() => {
+                welcomeText.innerHTML = `<span class="speaker">Quark:</span> "${scene.quarkResponse}"`;
+            }, 5000);
+            
+            // Scene ends
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                // Show floating quark comment
+                showQuarkComment(scene.quarkResponse);
+            }, 8000);
+        }
+
+        function showQuarkComment(text) {
+            const comment = document.getElementById('quarkComment');
+            const commentText = document.getElementById('quarkCommentText');
+            commentText.textContent = text;
+            comment.classList.add('show');
+            
+            setTimeout(() => {
+                comment.classList.remove('show');
+            }, 5000);
+        }
+
+        function skipScene() {
+            document.getElementById('welcomeOverlay').classList.remove('active');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial content
+            document.getElementById('quoteDisplay').textContent = `"${quotes[0].text}"`;
+            document.querySelector('.quote-author').textContent = `— ${quotes[0].author}`;
+            document.getElementById('ruleDisplay').textContent = `"${rules[0].rule}"`;
+            document.querySelector('.rule-number').textContent = `Rule #${rules[0].number}`;
+            
+            // Play welcome scene
+            playWelcomeScene();
+        });
+    </script>
+</body>
+</html>

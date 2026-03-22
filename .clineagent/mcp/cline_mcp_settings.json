@@ -9,11 +9,11 @@
       }
     },
 
-    "brave-search": {
+    "tavily": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+      "args": ["-y", "@modelcontextprotocol/server-tavily"],
       "env": {
-        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
       }
     },
 

@@ -224,8 +224,6 @@ Read this file before every task to pick the right agent. Match the task to a de
 | `agents/testing/tool-evaluator.md` | Expert technology assessment specialist focused on evaluating, testing, and recommending tools, software, and  |
 | `agents/testing/workflow-optimizer.md` | Expert process improvement specialist focused on analyzing, optimizing, and automating workflows across all bu |
 
-## Other
-
 | File | Description |
 |---|---|
 | `agents/code-reviewer.md` | | |

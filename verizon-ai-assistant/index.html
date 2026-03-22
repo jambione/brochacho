@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verizon Business AI Assistant | AirOps-Style POC</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --vz-red: #E10014;
+            --vz-black: #000000;
+            --vz-white: #ffffff;
+            --vz-gray-100: #f8f8f8;
+            --vz-gray-200: #e8e8e8;
+            --vz-gray-300: #d0d0d0;
+            --vz-gray-500: #6b6b6b;
+            --vz-gray-700: #3d3d3d;
+            --vz-gray-900: #1a1a1a;
+            --accent-blue: #0066cc;
+            --accent-yellow: #F8FF3C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--vz-gray-900) 0%, var(--vz-gray-700) 100%);
+            min-height: 100vh;
+            color: var(--vz-white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: var(--vz-black);
+            padding: 20px 0;
+            border-bottom: 3px solid var(--vz-red);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--vz-red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            color: var(--vz-red);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            color: var(--vz-gray-300);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--vz-white);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(225, 0, 20, 0.2);
+            border: 1px solid var(--vz-red);
+            color: var(--vz-red);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--vz-white) 0%, var(--vz-gray-300) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--vz-gray-300);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--vz-red);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--vz-red) 0%, #ff4444 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--vz-gray-300);
+            line-height: 1.6;
+        }
+
+        /* Chat Interface */
+        .chat-section {
+            background: var(--vz-black);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            margin-bottom: 60px;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--vz-red) 0%, #cc0011 100%);
+            padding: 24px 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .chat-status {
+            width: 12px;
+            height: 12px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .chat-header span {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .message {
+            display: flex;
+            gap: 16px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .message.ai .message-avatar {
+            background: linear-gradient(135deg, var(--vz-red) 0%, #ff4444 100%);
+        }
+
+        .message.user .message-avatar {
+            background: var(--vz-gray-700);
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 16px 20px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .message.ai .message-content {
+            background: var(--vz-gray-900);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message.user .message-content {
+            background: var(--vz-red);
+        }
+
+        .message-content code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+        }
+
+        .message-content pre {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        .message-content ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .message-content li {
+            margin: 4px 0;
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 8px 0;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--vz-gray-500);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-4px); }
+        }
+
+        .chat-input-container {
+            padding: 24px 32px;
+            background: var(--vz-gray-900);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 16px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: var(--vz-gray-800);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--vz-white);
+            font-family: inherit;
+            resize: none;
+            min-height: 56px;
+            max-height: 120px;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--vz-red);
+        }
+
+        .chat-input::placeholder {
+            color: var(--vz-gray-500);
+        }
+
+        .chat-send-btn {
+            background: var(--vz-red);
+            color: var(--vz-white);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-send-btn:hover {
+            background: #cc0011;
+            transform: scale(1.02);
+        }
+
+        .chat-send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .quick-action {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 13px;
+            color: var(--vz-gray-300);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-action:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--vz-white);
+            border-color: var(--vz-red);
+        }
+
+        /* Data Sources */
+        .data-sources {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 60px;
+        }
+
+        .data-sources h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .source-badge {
+            background: var(--vz-red);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .source-item {
+            background: var(--vz-gray-900);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .source-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(225, 0, 20, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .source-info h4 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .source-info span {
+            font-size: 12px;
+            color: var(--vz-gray-500);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--vz-gray-500);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer a {
+            color: var(--vz-red);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .message-content {
+                max-width: 85%;
+            }
+
+            .chat-header {
+                padding: 16px 20px;
+            }
+
+            .chat-messages {
+                padding: 20px;
+            }
+
+            .chat-input-container {
+                padding: 16px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">V</div>
+                <div class="logo-text">Verizon <span>AI</span></div>
+            </div>
+            <nav class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#demo">Live Demo</a>
+                <a href="#sources">Data Sources</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-badge">AI-Powered Business Assistant</div>
+            <h1>Your AI Assistant for<br>Verizon Business Solutions</h1>
+            <p>Ask questions about Verizon Business products, generate content, and get insights powered by AI—similar to AirOps but for telecommunications.</p>
+        </section>
+
+        <section class="features" id="features">
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>Conversational AI</h3>
+                <p>Ask natural language questions about Verizon Business products, plans, and solutions in real-time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✍️</div>
+                <h3>Content Generation</h3>
+                <p>Generate marketing copy, product descriptions, and sales materials based on Verizon Business data.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Comparative Analysis</h3>
+                <p>Compare plans, features, and pricing across different Verizon Business offerings instantly.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Deep Search</h3>
+                <p>Query across all Verizon Business content including products, solutions, and documentation.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📝</div>
+                <h3>SEO Optimization</h3>
+                <p>Generate SEO-optimized content with keyword analysis and content scoring.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Quick Templates</h3>
+                <p>Use pre-built templates for common business content needs like proposals and pitches.</p>
+            </div>
+        </section>
+
+        <section class="chat-section" id="demo">
+            <div class="chat-header">
+                <div class="chat-status"></div>
+                <div>
+                    <h2>Verizon Business AI Assistant</h2>
+                    <span>Powered by advanced AI • Connected to verizon.com/business</span>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    <div class="message-avatar">V</div>
+                    <div class="message-content">
+                        <p>👋 Welcome to the Verizon Business AI Assistant! I'm here to help you with:</p>
+                        <ul>
+                            <li>Information about <code>Business Internet</code> plans and pricing</li>
+                            <li>Enterprise <code>5G Network</code> solutions</li>
+                            <li>Mobile plans for small and medium businesses</li>
+                            <li>Security solutions like <code>DDoS Shield</code></li>
+                            <li>IoT and Fleet Management products</li>
+                        </ul>
+                        <p>Try one of the quick actions below or ask me anything!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <textarea 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Ask about Verizon Business solutions..."
+                        rows="1"
+                    ></textarea>
+                    <button class="chat-send-btn" id="sendBtn" onclick="sendMessage()">
+                        <span>Send</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="quick-actions">
+                    <button class="quick-action" onclick="quickAction('Compare Business Internet plans')">📊 Compare Internet Plans</button>
+                    <button class="quick-action" onclick="quickAction('What 5G solutions does Verizon offer for enterprise?')">📡 Enterprise 5G</button>
+                    <button class="quick-action" onclick="quickAction('Generate a pitch for Small Business Mobile plans')">💼 Small Business Pitch</button>
+                    <button class="quick-action" onclick="quickAction('What security products are available?')">🔒 Security Solutions</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="data-sources" id="sources">
+            <h3>
+                📚 Connected Data Sources
+                <span class="source-badge">verizon.com/business</span>
+            </h3>
+            <div class="sources-grid">
+                <div class="source-item">
+                    <div class="source-icon">📱</div>
+                    <div class="source-info">
+                        <h4>Mobile & Devices</h4>
+                        <span>Smartphones, Plans, Connected Laptops</span>
+                    </div>
+                </div>
+                <div class="source-item">
+                    <div class="source-icon">🌐</div>
+                    <div class="source-info">
+                        <h4>Business Internet</h4>
+                        <span>Fios, Broadband, Fiber Solutions</span>
+                    </div>
+                </div>
+                <div class="source-item">
+                    <div class="source-icon">🏢</div>
+                    <div class="source-info">
+                        <h4>Enterprise Solutions</h4>
+                        <span>Private 5G, Network Services</span>
+                    </div>
+                </div>
+                <div class="source-item">
+                    <div class="source-icon">🔐</div>
+                    <div class="source-info">
+                        <h4>Security</h4>
+                        <span>DDoS Shield, Network Security</span>
+                    </div>
+                </div>
+                <div class="source-item">
+                    <div class="source-icon">📞</div>
+                    <div class="source-info">
+                        <h4>Voice & Collaboration</h4>
+                        <span>Contact Center, CX Solutions</span>
+                    </div>
+                </div>
+                <div class="source-item">
+                    <div class="source-icon">📡</div>
+                    <div class="source-info">
+                        <h4>IoT & Fleet</h4>
+                        <span>Sensor Insights, Fleet Management</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>POC Demo • Inspired by <a href="https://www.airops.com/" target="_blank">AirOps</a> • Built with Verizon Business Data</p>
+    </footer>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        // Auto-resize textarea
+        chatInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Handle Enter key
+        chatInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function quickAction(question) {
+            chatInput.value = question;
+            sendMessage();
+        }
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, 'user');
+            chatInput.value = '';
+            chatInput.style.height = 'auto';
+
+            // Show typing indicator
+            const typingId = showTyping();
+
+            // Simulate AI response
+            setTimeout(() => {
+                removeTyping(typingId);
+                const response = generateResponse(message);
+                addMessage(response, 'ai');
+            }, 1500);
+        }
+
+        function addMessage(content, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const avatar = type === 'ai' ? 'V' : '👤';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">${formatContent(content)}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            const id = 'typing-' + Date.now();
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message ai';
+            typingDiv.id = id;
+            typingDiv.innerHTML = `
+                <div class="message-avatar">V</div>
+                <div class="message-content">
+                    <div class="typing-indicator">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            `;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return id;
+        }
+
+        function removeTyping(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function formatContent(content) {
+            // Simple markdown-like formatting
+            return content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`(.*?)`/g, '<code>$1</code>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function generateResponse(question) {
+            const q = question.toLowerCase();
+            
+            if (q.includes('internet') || q.includes('fios') || q.includes('broadband')) {
+                return `
+                    <p>📡 <strong>Verizon Business Internet Options:</strong></p>
+                    <ul>
+                        <li><code>Fios Business Internet</code> - Full-service, zero-effort setup. Next-day installation available.</li>
+                        <li><code>Frontier Business Fiber</code> - Lightning-fast 100% fiber internet with America's best 5G network.</li>
+                        <li><code>Business Broadband</code> - Reliable, ultrafast internet to boost productivity.</li>
+                    </ul>
+                    <p>Would you like me to generate a comparison table or detailed pricing information?</p>
+                `;
+            }
+            
+            if (q.includes('5g') || q.includes('enterprise') || q.includes('private network')) {
+                return `
+                    <p>📡 <strong>Enterprise 5G Solutions:</strong></p>
+                    <ul>
+                        <li><code>Private 5G Network</code> - Ultrafast, low-latency wireless connection for increased agility and efficiency.</li>
+                        <li><code>Network Connectivity</code> - Mission-critical technology for public safety and government.</li>
+                    </ul>
+                    <p>Verizon's Private 5G can help transform your operations with dedicated network infrastructure. Want me to create a proposal outline?</p>
+                `;
+            }
+            
+            if (q.includes('security') || q.includes('ddos')) {
+                return `
+                    <p>🔐 <strong>Verizon Business Security Solutions:</strong></p>
+                    <ul>
+                        <li><code>DDoS Shield</code> - Helps mitigate sophisticated distributed-denial-of-service attacks.</li>
+                        <li><code>Network Cloud Security</code> - Comprehensive protection for your cloud infrastructure.</li>
+                    </ul>
+                    <p>Security is critical for modern business. Would you like a security assessment template?</p>
+                `;
+            }
+            
+            if (q.includes('mobile') || q.includes('phone') || q.includes('plan')) {
+                return `
+                    <p>📱 <strong>Verizon Business Mobile Solutions:</strong></p>
+                    <ul>
+                        <li><code>My Biz Plan</code> - Base plan with essentials + customizable add-ons.</li>
+                        <li><code>Connected Laptops</code> - Keep teams connected and productive anywhere.</li>
+                        <li><code>Device Shop</code> - Latest smartphones and devices for business.</li>
+                    </ul>
+                    <p>Small businesses can leverage the <code>Digital Ready</code> program for free training and grants. Interested?</p>
+                `;
+            }
+            
+            if (q.includes('iot') || q.includes('sensor') || q.includes('fleet')) {
+                return `
+                    <p>📡 <strong>IoT & Fleet Management:</strong></p>
+                    <ul>
+                        <li><code>Sensor Insights</code> - Streamline complex IoT ecosystems.</li>
+                        <li><code>Fleet Management</code> - Complete vehicle tracking and management solution.</li>
+                    </ul>
+                    <p>Perfect for logistics, supply chain, and operations optimization. Want a demo script?</p>
+                `;
+            }
+            
+            if (q.includes('pitch') || q.includes('proposal') || q.includes('generate')) {
+                return `
+                    <p>✍️ <strong>Generated Small Business Pitch:</strong></p>
+                    <p><em>"Verizon Business empowers small businesses with enterprise-grade technology. From lightning-fast Fios internet to AI-powered business assistants, we provide the tools you need to compete and grow. Our My Biz Plan offers customizable solutions starting at competitive rates, with dedicated support and next-day setup."</em></p>
+                    <p>Would you like me to generate more content variations or create a full proposal document?</p>
+                `;
+            }
+
+            if (q.includes('small business') || q.includes('smb')) {
+                return `
+                    <p>🏢 <strong>Small & Medium Business Solutions:</strong></p>
+                    <ul>
+                        <li><code>Business Internet</code> - Fast, affordable, reliable internet anywhere.</li>
+                        <li><code>Business Assistant</code> - AI-powered customer engagement via text.</li>
+                        <li><code>Digital Ready</code> - Free courses, mentorships, networking, and grants.</li>
+                        <li><code>Connected Laptops</code> - Productivity tools for remote teams.</li>
+                    </ul>
+                    <p>Verizon's Digital Ready program has helped thousands of small businesses grow. Want to learn more?</p>
+                `;
+            }
+            
+            return `
+                <p>🤖 I can help you with information about Verizon Business solutions including:</p>
+                <ul>
+                    <li>Business Internet (Fios, Broadband, Fiber)</li>
+                    <li>Enterprise 5G and Private Networks</li>
+                    <li>Mobile Plans and Devices</li>
+                    <li>Security Solutions (DDoS Shield)</li>
+                    <li>IoT, Fleet Management, and more</li>
+                </ul>
+                <p>Try asking about specific products or click a quick action above!</p>
+            `;
+        }
+    </script>
+</body>
+</html>

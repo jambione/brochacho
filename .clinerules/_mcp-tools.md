@@ -37,6 +37,7 @@ Use COMPOSIO for:
 | Filesystem (`filesystem`) | `read_file`, `read_text_file`, `write_file`, `edit_file`, `create_directory`, `list_directory`, `directory_tree`, `move_file`, `search_files`, `get_file_info` | File operations outside workspace, batch file processing |
 | Memory (`memory`) | `create_entities`, `create_relations`, `add_observations`, `search_nodes`, `read_graph`, `open_nodes`, `delete_entities`, `delete_observations`, `delete_relations` | Storing project context, user preferences, decisions across sessions |
 | Docker (`docker`) | `list_containers`, `get_logs`, `exec_command`, `inspect_container`, `list_images` | Container health, logs, debugging services |
+| Tavily (`tavily`) | `tavily_search` | Web search with AI-optimized results |
 
 ### Optional Local
 
@@ -70,5 +71,6 @@ Use COMPOSIO for:
 ## Notes
 
 - COMPOSIO API key: `${COMPOSIO_API_KEY}` (set in `.clineagent/mcp/.env`)
+- Tavily API key: `${TAVILY_API_KEY}` (set in `.clineagent/mcp/.env`)
 - Local servers require `npx` and respective npm packages installed
 - Restart VS Code after editing `cline_mcp_settings.json`
