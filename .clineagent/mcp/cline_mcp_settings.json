@@ -9,12 +9,9 @@
       }
     },
 
-    "tavily": {
+    "duckduckgo": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-tavily"],
-      "env": {
-        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
-      }
+      "args": ["-y", "duckduckgo-mcp-server"]
     },
 
     "fetch": {
@@ -34,37 +31,6 @@
     "puppeteer": {
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
-    },
-
-    "docker": {
-      "command": "npx",
-      "args": ["-y", "@hypnosis/docker-mcp-server"]
-    },
-
-    "postgres": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-postgres",
-        "${POSTGRES_CONNECTION_STRING}"
-      ]
-    },
-
-    "sqlite": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@mokei/mcp-sqlite",
-        "${SQLITE_DB_PATH}"
-      ]
-    },
-
-    "redis": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-redis"],
-      "env": {
-        "REDIS_URL": "${REDIS_URL}"
-      }
     },
 
     "memory": {
